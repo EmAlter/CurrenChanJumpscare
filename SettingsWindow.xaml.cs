@@ -24,13 +24,13 @@ namespace CurrenChanJumpscare
             {
                 if (min <= 0 || max <= 0)
                 {
-                    MessageBox.Show("I tempi devono essere maggiori di zero.", "Valori non validi", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("The time values must be greater than zero.", "Invalid values", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
                 if (max < min)
                 {
-                    MessageBox.Show("Il tempo massimo non può essere minore del tempo minimo.", "Errore di logica", MessageBoxButton.OK, MessageBoxImage.Warning);
+                    MessageBox.Show("The maximum time cannot be less than the minimum time.", "Logic error", MessageBoxButton.OK, MessageBoxImage.Warning);
                     return;
                 }
 
@@ -41,7 +41,7 @@ namespace CurrenChanJumpscare
             }
             else
             {
-                MessageBox.Show("Inserisci solo valori numerici interi.", "Errore di digitazione", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Enter only integer numeric values.", "Typing error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
     }

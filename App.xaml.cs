@@ -1,6 +1,6 @@
 ﻿using System;
 using System.IO;
-using System.Threading; // Aggiunto per il Mutex
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
@@ -17,24 +17,23 @@ namespace CurrenChanJumpscare
 
         private global::System.Windows.Forms.NotifyIcon? _notifyIcon;
 
-        // Dichiara il Mutex a livello di classe affinché non venga distrutto
         private static Mutex? _mutex = null;
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            // Crea un ID univoco per il lucchetto del programma
+            // Create a unique ID for the program instance
             const string appName = "CurrenChanJumpscare_UniqueInstanceID";
 
-            // Tenta di creare un nuovo Mutex
+            // Try to create a new Mutex
             _mutex = new Mutex(true, appName, out bool createdNew);
 
-            // Se createdNew è falso, significa che un'altra istanza è già aperta
+            // If createdNew is false, another instance is already open
             if (!createdNew)
             {
-                MessageBox.Show("Il programma è già in esecuzione in background. Controlla l'icona in basso a destra nella barra delle applicazioni.",
-                                "Jumpscare già attivo", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("The program is already running in the background. Check the icon in the lower-right corner of the application bar.",
+                                "Jumpscare already active", MessageBoxButton.OK, MessageBoxImage.Information);
 
-                // Arresta questa nuova istanza istantaneamente
+                // Stop this new instance immediately
                 Application.Current.Shutdown();
                 return;
             }
@@ -67,12 +66,12 @@ namespace CurrenChanJumpscare
             {
                 Icon = new System.Drawing.Icon(iconPath),
                 Visible = true,
-                Text = "Jumpscare Attivo in Background"
+                Text = "Jumpscare Active in Background"
             };
 
             var contextMenu = new global::System.Windows.Forms.ContextMenuStrip();
-            contextMenu.Items.Add("Impostazioni", null, (s, e) => ShowSettings());
-            contextMenu.Items.Add("Esci", null, (s, e) => ExitApplication());
+            contextMenu.Items.Add("Settings", null, (s, e) => ShowSettings());
+            contextMenu.Items.Add("Exit", null, (s, e) => ExitApplication());
 
             _notifyIcon.ContextMenuStrip = contextMenu;
         }

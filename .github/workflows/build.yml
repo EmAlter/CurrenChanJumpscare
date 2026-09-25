@@ -3,11 +3,11 @@ name: Genera Eseguibili
 on:
   push:
     branches: [ "main", "master" ]
-  workflow_dispatch: # Permette di avviare l'azione anche manualmente da GitHub
+  workflow_dispatch:
 
 jobs:
   build:
-    runs-on: windows-latest # Usa Windows per compilare correttamente WPF e Windows Forms
+    runs-on: windows-latest
     
     steps:
     - name: Checkout del codice
@@ -32,7 +32,7 @@ jobs:
         
     - name: Pubblica versione Completa negli Artifacts
       uses: actions/upload-artifact@v4
-        # La v4 compatta automaticamente la cartella in un file .zip
+
       with:
         name: CurrenChanJumpscare-Completa
         path: ./output/completa/
