@@ -1,0 +1,8 @@
+# Cartelle di compilazione
+[Bb]in/
+[Oo]bj/
+
+# File utente specifici di VS Code / Visual Studio
+.vscode/
+.vs/
+*.user

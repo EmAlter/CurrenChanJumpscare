@@ -1,0 +1,10 @@
+<Window x:Class="CurrenChanJumpscare.VideoWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Video" WindowStyle="None" WindowState="Maximized" 
+        Topmost="True" Background="Black" ShowInTaskbar="False">
+    <Grid>
+        <MediaElement x:Name="Player" LoadedBehavior="Play" UnloadedBehavior="Stop" Stretch="Uniform"/>
+        <MediaElement x:Name="AudioPlayer" LoadedBehavior="Play" UnloadedBehavior="Stop" Visibility="Collapsed" />
+    </Grid>
+</Window>

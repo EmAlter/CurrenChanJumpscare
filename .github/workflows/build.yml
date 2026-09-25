@@ -1,0 +1,38 @@
+name: Genera Eseguibili
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  workflow_dispatch: # Permette di avviare l'azione anche manualmente da GitHub
+
+jobs:
+  build:
+    runs-on: windows-latest # Usa Windows per compilare correttamente WPF e Windows Forms
+    
+    steps:
+    - name: Checkout del codice
+      uses: actions/checkout@v4
+      
+    - name: Setup .NET 8
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: '8.0.x'
+        
+    - name: Compila versione Leggera (Framework-Dependent)
+      run: dotnet publish -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -o ./output/leggera
+      
+    - name: Compila versione Completa (Self-Contained)
+      run: dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./output/completa
+      
+    - name: Pubblica versione Leggera negli Artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: CurrenChanJumpscare-Leggera
+        path: ./output/leggera/
+        
+    - name: Pubblica versione Completa negli Artifacts
+      uses: actions/upload-artifact@v4
+        # La v4 compatta automaticamente la cartella in un file .zip
+      with:
+        name: CurrenChanJumpscare-Completa
+        path: ./output/completa/

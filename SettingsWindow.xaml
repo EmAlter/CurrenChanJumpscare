@@ -1,0 +1,19 @@
+<Window x:Class="CurrenChanJumpscare.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Impostazioni Jumpscare" Height="350" Width="300" WindowStartupLocation="CenterScreen">
+    <StackPanel Margin="20">
+        <TextBlock Text="Curren-Chan apparirà a sorpresa in un momento casuale calcolato di volta in volta tra il valore minimo e il valore massimo indicati." 
+                   TextWrapping="Wrap" FontStyle="Italic" Foreground="DimGray" Margin="0,0,0,15" />
+
+        <TextBlock Text="Tempo minimo (secondi):" />
+        <TextBox x:Name="MinTimeTextBox" Text="600" Margin="0,5,0,15" />
+        
+        <TextBlock Text="Tempo massimo (secondi):" />
+        <TextBox x:Name="MaxTimeTextBox" Text="7200" Margin="0,5,0,25" />
+
+        <CheckBox x:Name="AudioCheckBox" Content="Abilita Audio" IsChecked="True" Margin="0,0,0,25" />
+        
+        <Button Content="Avvia in Background" Click="StartButton_Click" Padding="10" />
+    </StackPanel>
+</Window>
