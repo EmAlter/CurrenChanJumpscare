@@ -1,16 +1,20 @@
-name: Genera Eseguibili
+name: Build and Publish Release
 
 on:
   push:
-    branches: [ "main", "master" ]
+    tags:
+      - 'v*' # Triggers automatically when a tag is pushed (e.g., v1.0.0)
   workflow_dispatch:
 
+permissions:
+  contents: write # Required permission to create the GitHub release
+
 jobs:
-  build:
+  build-and-release:
     runs-on: windows-latest
     
     steps:
-    - name: Checkout del codice
+    - name: Checkout Code
       uses: actions/checkout@v4
       
     - name: Setup .NET 8
@@ -18,21 +22,22 @@ jobs:
       with:
         dotnet-version: '8.0.x'
         
-    - name: Compila versione Leggera (Framework-Dependent)
-      run: dotnet publish -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -o ./output/leggera
+    - name: Build Framework-Dependent Version (Lightweight)
+      run: dotnet publish -c Release -r win-x64 --self-contained false -p:PublishSingleFile=true -o ./output/framework-dependent
       
-    - name: Compila versione Completa (Self-Contained)
-      run: dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./output/completa
+    - name: Build Self-Contained Version (Complete)
+      run: dotnet publish -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o ./output/self-contained
       
-    - name: Pubblica versione Leggera negli Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: CurrenChanJumpscare-Leggera
-        path: ./output/leggera/
+    - name: Create ZIP Archives
+      run: |
+        Compress-Archive -Path ./output/framework-dependent/* -DestinationPath CurrenChanJumpscare-FrameworkDependent.zip
+        Compress-Archive -Path ./output/self-contained/* -DestinationPath CurrenChanJumpscare-SelfContained.zip
         
-    - name: Pubblica versione Completa negli Artifacts
-      uses: actions/upload-artifact@v4
-
+    - name: Create Release and Upload ZIPs
+      uses: softprops/action-gh-release@v2
+      if: startsWith(github.ref, 'refs/tags/')
       with:
-        name: CurrenChanJumpscare-Completa
-        path: ./output/completa/
+        generate_release_notes: true
+        files: |
+          CurrenChanJumpscare-FrameworkDependent.zip
+          CurrenChanJumpscare-SelfContained.zip
